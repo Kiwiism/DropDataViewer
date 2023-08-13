@@ -1,0 +1,52 @@
+@model List<DDV.Models.DropData>
+
+@{
+    Dictionary<string, string>? dropperXmlData = ViewData["dropperXmlData"] as Dictionary<string, string>;
+    string? itemId = ViewData["itemId"] as string;
+    string? itemName = ViewData["itemName"] as string;
+}
+
+<h1>Droppers That Drop<br /><b>@itemName (ID: @itemId)</b></h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.ActionLink("Dropper ID", "Detail", new { itemId = itemId, sortOrder = ViewBag.DropperIdSortParm })</th>
+            <th>Dropper Name</th>
+            <th>Min Qty</th>
+            <th>Max Qty</th>
+            <th>Quest ID</th>
+            <th>@Html.ActionLink("Chance", "Detail", new { itemId = itemId, sortOrder = ViewBag.ChanceSortParm })</th>
+            <th>1 In</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dropData in Model)
+        {
+            <tr>
+                <td><a href="@Url.Action("Detail", "Dropper", new { dropperId = dropData.DropperId })">@dropData.DropperId</a></td>
+                @if (dropperXmlData != null && dropperXmlData.ContainsKey(dropData.DropperId.ToString()))
+                {
+                    <td>@dropperXmlData[dropData.DropperId.ToString()]</td>
+                }
+                else
+                {
+                    <td>-</td>
+                }
+                <td>@dropData.Minimum_Quantity</td>
+                <td>@dropData.Maximum_Quantity</td>
+                <td>@dropData.QuestId</td>
+                @{
+                    decimal percent = (decimal)dropData.Chance / 1000000 * 100;
+                    decimal count = 0;
+                    if (percent > 0)
+                    {
+                        count = 100 / percent;
+                    }
+                }
+                <td>@dropData.Chance.ToString("###,###,###,###") (@percent.ToString("G29")%)</td>
+                <td>@count.ToString("###,###,###,###.###")</td>
+            </tr>
+        }
+    </tbody>
+</table>

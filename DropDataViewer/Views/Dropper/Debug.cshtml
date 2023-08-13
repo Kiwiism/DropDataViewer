@@ -1,0 +1,21 @@
+@model Dictionary<string, string>
+
+<h1>Droppers</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Dropper ID</th>
+            <th>Dropper Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (KeyValuePair<string, string> entry in Model)
+        {
+            <tr>
+                <td>@entry.Key</td>
+                <td>@entry.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>

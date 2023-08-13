@@ -1,0 +1,30 @@
+@model Dictionary<string, KeyValuePair<string, string>>
+
+<h1>Items</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item ID</th>
+            <th>Item Name</th>
+            <th>Item Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (KeyValuePair<string, KeyValuePair<string, string>> entry in Model)
+        {
+            <tr>
+                <td>@entry.Key</td>
+                <td>@entry.Value.Key</td>
+                @if (entry.Value.Value != string.Empty)
+                {
+                    <td>@entry.Value.Value</td>
+                }
+                else
+                {
+                    <td>-</td>
+                }                
+            </tr>
+        }
+    </tbody>
+</table>

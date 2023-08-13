@@ -1,0 +1,49 @@
+@model List<int>
+
+@{
+    Dictionary<string, KeyValuePair<string, string>>? itemXmlData = ViewData["itemXmlData"] as Dictionary<string, KeyValuePair<string, string>>;
+}
+
+<h1>Items</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item ID</th>
+            <th>Item Name</th>
+            <th>Item Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var id in Model)
+        {
+            <tr>
+                <td><a href="@Url.Action("Detail", "Item", new { itemId = id })">@id</a></td>
+                @if (itemXmlData != null && itemXmlData.ContainsKey(id.ToString()))
+                {
+                    @if (itemXmlData[id.ToString()].Key != string.Empty)
+                    {
+                        <td>@itemXmlData[id.ToString()].Key</td>
+                    }
+                    else
+                    {
+                        <td>-</td>
+                    }
+                    @if (itemXmlData[id.ToString()].Value != string.Empty)
+                    {
+                        <td>@itemXmlData[id.ToString()].Value</td>
+                    }
+                    else
+                    {
+                        <td>-</td>
+                    }
+                }
+                else
+                {
+                    <td>-</td>
+                    <td>-</td>
+                }                
+            </tr>
+        }
+    </tbody>
+</table>

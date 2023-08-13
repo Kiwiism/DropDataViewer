@@ -1,0 +1,33 @@
+@model List<int>
+
+@{
+    Dictionary<string, string>? dropperXmlData = ViewData["dropperXmlData"] as Dictionary<string, string>;
+}
+
+<h1>Droppers</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Dropper ID</th>
+            <th>Dropper Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var id in Model)
+        {
+            <tr>
+                <td><a href="@Url.Action("Detail", "Dropper", new { dropperId = id })">@id</a></td>
+                @if (dropperXmlData != null && dropperXmlData.ContainsKey(id.ToString()))
+                {
+                    <td>@dropperXmlData[id.ToString()]</td>
+                }
+                else
+                {
+                    <td>-</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
